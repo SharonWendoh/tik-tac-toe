@@ -1,5 +1,6 @@
 package com.example.tictacktoeapplication
 
+import android.widget.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -13,6 +14,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
+@Composable
+fun SwitchButton(checked: Boolean, modifier: Modifier = Modifier, onCheckedChange:(isChecked: Boolean) -> Unit) {
+    Switch(
+        checked = checked,
+        modifier = modifier,
+        onCheckedChange = { newChecked -> onCheckedChange(newChecked)
+
+        }
+    )
+}
 
 @Composable
 fun button(text: String, onclick: () -> Unit){
@@ -87,15 +99,15 @@ fun Screen(board: ArrayList<String>, onclick: (Int) -> Unit){
     }
 }
 
-@Preview
-@Composable
-fun previewScreen(){
-    Screen(arrayListOf("", "", "", "", "", "", "", "", ""),onclick = {})
-}
-
-
-@Preview
-@Composable
-fun previewButton(){
-    button("X", onclick = {})
-}
+//@Preview
+//@Composable
+//fun previewScreen(){
+//    Screen(arrayListOf("", "", "", "", "", "", "", "", ""),onclick = {})
+//}
+//
+//
+//@Preview
+//@Composable
+//fun previewButton(){
+//    button("X", onclick = {})
+//}

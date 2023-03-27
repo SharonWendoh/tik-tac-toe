@@ -28,6 +28,18 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Row() {
+                        Text(text = "Single Player")
+                        Spacer(modifier = Modifier.size(10.dp))
+                        SwitchButton(checked = viewModel.singlePlayer, onCheckedChange = {newChecked ->
+                            if(viewModel.singlePlayer){
+                                viewModel.updatePlayerMode(false)
+                            }else{
+                                viewModel.updatePlayerMode(true)
+                            }
+                        }
+                        )
+                    }
                     Screen(board = viewModel.board,viewModel::game)
                     Spacer(modifier = Modifier.size(30.dp))
                     if (viewModel.isGameOver) {
