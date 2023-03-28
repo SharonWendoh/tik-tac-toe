@@ -4,11 +4,12 @@ import android.widget.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,18 @@ fun SwitchButton(checked: Boolean, modifier: Modifier = Modifier, onCheckedChang
         modifier = modifier,
         onCheckedChange = { newChecked -> onCheckedChange(newChecked)
 
+        }
+    )
+}
+
+@Composable
+fun CharTextField(onTextChange: (String) -> Unit){
+    var text by remember { mutableStateOf(TextFieldValue("")) }
+    TextField(
+        value = text,
+        onValueChange = { newText ->
+            text = newText
+            onTextChange(newText.text)
         }
     )
 }
@@ -55,7 +68,7 @@ fun RestartButton(onclick: () -> Unit){
             .size(300.dp,50.dp),
 
     ) {
-        Text(text =  "Restart Game")
+        Text(text =  "Restart Game ")
     }
 }
 
@@ -99,6 +112,11 @@ fun Screen(board: ArrayList<String>, onclick: (Int) -> Unit){
     }
 }
 
+//@Preview
+//@Composable
+//fun previewCharTextField(){
+//    CharTextField()
+//}
 //@Preview
 //@Composable
 //fun previewScreen(){

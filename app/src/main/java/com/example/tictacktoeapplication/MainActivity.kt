@@ -1,6 +1,7 @@
 package com.example.tictacktoeapplication
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -28,6 +29,14 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    CharTextField { text ->
+                        viewModel.player1 = text
+                        Log.d("MainActivity", "Text entered: $text")
+                    }
+                    CharTextField { text ->
+                        viewModel.player2 = text
+                        Log.d("MainActivity", "Text entered: $text")
+                    }
                     Row() {
                         Text(text = "Single Player")
                         Spacer(modifier = Modifier.size(10.dp))

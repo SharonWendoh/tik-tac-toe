@@ -1,15 +1,11 @@
 package com.example.tictacktoeapplication
 
-import android.widget.Button
-import androidx.compose.material.MaterialTheme
+//import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-//import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import android.graphics.Color
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ViewModel : ViewModel() {
     var singlePlayer by mutableStateOf(true)
@@ -22,6 +18,11 @@ class ViewModel : ViewModel() {
 
     var winner by mutableStateOf("")
 
+    var player1 by mutableStateOf("")
+
+    var player2 by mutableStateOf("")
+
+
     fun restart() {
         isGameOver = false
         board = arrayListOf("", "", "", "", "", "", "", "", "")
@@ -33,7 +34,7 @@ class ViewModel : ViewModel() {
 
     fun isBoardFull(board: ArrayList<String>): Boolean {
         for (i in board) {
-            if (i != "X" && i != "O") return false
+            if (i != player1 && i != player2) return false
         }
         return true
     }
@@ -65,19 +66,19 @@ class ViewModel : ViewModel() {
         //check if computer can win in this move
         for (i in 0 until board.count()) {
             val copy = copyBoard(board)
-            if (copy[i] == "") copy[i] = "O"
+            if (copy[i] == "") copy[i] = player2
 
             //check for win
-            if (isGameWon(copy, "O")) return i
+            if (isGameWon(copy, player2)) return i
         }
 
 
         //check if player could win in the next move
         for (i in 0 until board.count()) {
             val copy = copyBoard(board)
-            if (copy[i] == "") copy[i] = "X"
+            if (copy[i] == "") copy[i] = player1
 
-            if (isGameWon(copy, "X")) return i
+            if (isGameWon(copy, player1)) return i
         }
 
         //try to make corners if it is free
@@ -96,32 +97,32 @@ class ViewModel : ViewModel() {
         if (board[move] == "") {
             if (currentPlayer == 1) {
                 board = ArrayList(board.toMutableList().also {
-                    it[move] = "X"
+                    it[move] = player1
                 })
                 currentPlayer = 2
 
                 if (singlePlayer) {
-                    if (!isBoardFull(board) && !isGameWon(board, "X")) {
+                    if (!isBoardFull(board) && !isGameWon(board, player1)) {
                         val nextMove = computerMove(board)
 
                         board = ArrayList(board.toMutableList().also {
-                            it[nextMove] = "O"
+                            it[nextMove] = player2
                         })
                     }
                     currentPlayer = 1
                 }
             } else {
                 board = ArrayList(board.toMutableList().also {
-                    it[move] = "O"
+                    it[move] = player2
                 })
                 currentPlayer = 1
 
                 if (singlePlayer) {
-                    if (!isBoardFull(board) && !isGameWon(board, "O")) {
+                    if (!isBoardFull(board) && !isGameWon(board, player2)) {
                         val nextMove = computerMove(board)
 
                         board = ArrayList(board.toMutableList().also {
-                            it[nextMove] = "X"
+                            it[nextMove] = player1
                         })
                     }
                     currentPlayer = 2
@@ -129,7 +130,7 @@ class ViewModel : ViewModel() {
             }
         }
 
-        isGameOver = isGameWon(board,"X") || isGameWon(board, "O") || isBoardFull(board)
+        isGameOver = isGameWon(board,player1) || isGameWon(board, player2) || isBoardFull(board)
         winner = gameOutcome(board)
 
 
@@ -148,8 +149,8 @@ class ViewModel : ViewModel() {
 
     fun gameOutcome(board: ArrayList<String>): String {
         return when {
-            isGameWon(board, "X") -> "Player 1 won"
-            isGameWon(board, "O") -> "Player 2 won"
+            isGameWon(board, player1) -> "Player 1 won"
+            isGameWon(board, player2) -> "Player 2 won"
             isBoardFull(board) -> "It is Tie"
             else -> "Tie"
         }
