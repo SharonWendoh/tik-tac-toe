@@ -27,6 +27,7 @@ class ViewModel : ViewModel() {
         isGameOver = false
         board = arrayListOf("", "", "", "", "", "", "", "", "")
     }
+
     fun updatePlayerMode(singlePlayer: Boolean) {
         restart()
         this.singlePlayer = singlePlayer
